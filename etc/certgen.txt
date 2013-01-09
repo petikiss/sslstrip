@@ -1,0 +1,45 @@
+Generating self signed certificates:
+------------------------------------
+http://shib.kuleuven.be/docs/ssl_commands.shtml
+http://www.madboa.com/geek/openssl/
+
+
+used password: 12345
+
+Step 1: Generate a Private Key
+
+     openssl genrsa -des3 -out private.key 1024
+
+Step 2: Generate a CSR (Certificate Signing Request)
+
+     openssl req -new -key private.key -out server.csr
+
+Step 3: Remove Passphrase from Key
+
+     openssl rsa -in private.key -out private_nopass.key
+
+Step 4: Generating a Self-Signed Certificate
+
+     openssl x509 -req -days 365 -in server.csr -signkey private_nopass.key
+     -out server.crt
+
+
+Other commands:
+---------------
+
+Check certificate:
+      openssl x509 -in server.crt -text -noout
+
+Check a Certificate Signing Request (CSR)
+      openssl req -in server.csr -verify -text -noout
+
+Check a private key
+      openssl rsa -in private.key -check
+      or
+      less private_nopass.key
+
+Generate public key from private RSA key:
+      openssl rsa -in private_nopass.key -pubout > public.key
+
+
+
