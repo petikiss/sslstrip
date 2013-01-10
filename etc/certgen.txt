@@ -36,7 +36,7 @@ signreq.csr
 
 
 5) sign the request with the Root-CA certificate
-openssl x509 -req -in signreq.csr -CA root-ca/cacert.crt -CAkey root-ca/caprivatekey.pem -CAcreateserial -out signeddxa.crt -days 365
+openssl x509 -req -in signreq.csr -CA root-ca/cacert.crt -CAkey root-ca/caprivatekey.pem -CAcreateserial -out signedcert.crt -days 365
 
 Enter pass phrase for ca-root/privateroot.key: password
 
