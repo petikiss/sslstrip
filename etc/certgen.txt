@@ -1,3 +1,55 @@
+root-ca:
+-------
+1)
+mkdir root-ca
+
+2) generate a self signed certificate (could be use to sign other certificates -> can be used as Root-CA)
+openssl req -x509 -new -out root-ca/cacert.crt -keyout root-ca/caprivatekey.pem -days 365
+
+password: password
+
+output:
+caprivatekey.pem
+cacert.crt
+
+Client keys:
+-----------
+1) create a private key
+openssl genrsa -out privatekey.pem 1024
+
+output:
+privatekey.pem
+
+3) create the public version of the private key (public key)
+openssl rsa -in privatekey.pem -pubout > publickey.pem
+
+output:
+publickey.pem
+
+
+4) create a "certificate sign request" for public key (this should be sent to the Root-CA)
+openssl req -out signreq.csr -key privatekey.pem -new
+
+
+output:
+signreq.csr
+
+
+5) sign the request with the Root-CA certificate
+openssl x509 -req -in signreq.csr -CA root-ca/cacert.crt -CAkey root-ca/caprivatekey.pem -CAcreateserial -out signeddxa.crt -days 365
+
+Enter pass phrase for ca-root/privateroot.key: password
+
+output:
+signeddxa.cr
+
+
+
+
+----------
+-EXAMPLES-
+----------
+
 Generating self signed certificates:
 ------------------------------------
 http://shib.kuleuven.be/docs/ssl_commands.shtml
